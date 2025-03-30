@@ -124,7 +124,7 @@ export class UserProfileComponent implements OnInit {
 
     this.apiControllerService.loading$.next(true);
     this.apiControllerService
-      .post<UserPayload, UserResponse>('/users', {
+      .put<UserPayload, UserResponse>('users/7804411', {
         email: this.userProfileForm.value.email,
         gender: this.userProfileForm.value.gender,
         name: this.userProfileForm.value.name,
