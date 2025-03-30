@@ -1,59 +1,90 @@
-# Mocafi
+# [Deployed Application Link](https://mocafi-lac.vercel.app/)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
+## Project Introduction
 
-## Development server
+This project is a standalone application for handling user-related UI and CRUD operations.
 
-To start a local development server, run:
+It consists of a single user wrapper module (`UserFlowModule`) and three child modules for each page (`UserLoginModule`, `UserRegistrationModule`, `UserProfileModule`).
 
-```bash
-ng serve
-```
+The application consumes [GoRest](https://gorest.co.in) APIs.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Available Pages
 
-## Code scaffolding
+- **Login**
+- **Registration**
+- **User Profile**
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Technologies Used
 
-```bash
-ng generate component component-name
-```
+- **Angular v19**
+- **RxJS v7**
+- **SCSS**
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Local Development
 
-```bash
-ng generate --help
-```
+1. Ensure that you are running Node.js v23 or later.
+2. Run `npm install && ng serve` to start the application.
 
-## Building
+## Technical Decisions
 
-To build the project run:
+The following development patterns are used to maintain code quality and streamline development.
 
-```bash
-ng build
-```
+### **User Experience**
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Each module consists of a single page that is lazily loaded on demand, ensuring smooth performance by reducing initial load times.
+- A loading spinner is displayed during asynchronous operations.
+- Buttons are disabled if the form is invalid.
+- Inputs are disabled when they cannot be edited.
+- If a user navigates to an undefined page, they are redirected to the login page.
+- If an unauthenticated user attempts to access a protected page, they are redirected to the login page.
 
-## Running unit tests
+### **Error Handling**
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- Every request is intercepted and retried up to three times before displaying an error message.
+- Input and API errors are explicitly shown to help users resolve issues.
 
-```bash
-ng test
-```
+### **API Communications**
 
-## Running end-to-end tests
+- The access token is a non-expiring token for development purposes, stored in an environment variable on the host server and automatically attached to every request.
+- CRUD methods are generic to support custom types. However, they have limitations, discussed in the **"Real-World Application Considerations"** section.
+- `exhaustMap` is used to process only the first submitted request, preventing unnecessary duplicate API calls.
 
-For end-to-end (e2e) testing, run:
+### **Shared Components**
 
-```bash
-ng e2e
-```
+Shared components ensure a clean and consistent UI across the application.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### **Form Validation**
 
-## Additional Resources
+Form validation is centralized in a single pipe, ensuring consistency across multiple forms.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### **Clean Code**
+
+- A functional programming approach is used for better readability and maintainability.
+- Each page resides in its own directory, containing its module and child components.
+- `DestroyRef` should be used whenever possible to manage component lifecycle properly.
+
+### **Security**
+
+Auth guards protect sensitive pages from unauthorized access.
+
+## Real-World Application Considerations
+
+The following improvements should be made for production readiness:
+
+- Display a retry modal if an API request fails more than three times.
+- Override HTTP methods to use generic types instead of returning `Observable<any>`.
+- Move authentication headers to an HTTP interceptor instead of the API controller.
+- Store error messages in a constants module.
+- Develop shared components as a separate library to improve modularity.
+- Replace the validation pipe with a service for better performance.
+- Utilize global SCSS variables for styling consistency.
+- Use `shareReplay` to memoize requests when persisting data.
+- Store user-related API operations in a `UserStoreModule` to keep components clean.
+- Enforce strict password rules, requiring special characters and capital letters.
+
+## Notes
+
+- **Login credentials**:
+  - **Username:** `SamHere`
+  - **Password:** `adminadmin`
+- **User deletion**: Deleting a user does **not** actually remove the account. This is intentional to prevent logging you out and losing user profile data (since hardcoded values are used for demonstration). If you wish to enable actual deletion, uncomment the delete code in `UserProfileComponent`.
