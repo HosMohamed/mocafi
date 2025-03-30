@@ -16,14 +16,7 @@ import {
 export class CTAButtonComponent {
   @Input() disabled!: boolean;
   @Input() buttonText!: string;
+  @Input() buttonClass!: string;
   @Input() errorButton!: boolean;
   @Output() onClick = new EventEmitter<void>();
-
-  get buttonClass() {
-    if (this.errorButton) {
-      return 'error';
-    }
-
-    return '';
-  }
 }

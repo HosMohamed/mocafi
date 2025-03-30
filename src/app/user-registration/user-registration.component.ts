@@ -40,7 +40,6 @@ export class UserRegistrationComponent {
       return;
     }
 
-    this.apiControllerService.loading$.next(true);
     this.apiControllerService
       .post<UserPayload, UserResponse>('users', {
         email: this.registrationForm.value.email,
@@ -61,8 +60,6 @@ export class UserRegistrationComponent {
     response: UserResponse,
   ): Observable<UserResponse> {
     sessionStorage.setItem(SessionConstants.IsLoggedIn, 'true');
-    this.apiControllerService.loading$.next(false);
-    this.apiControllerService.error$.next(false);
     this.router.navigate(['./profile']);
     return of(response);
   }

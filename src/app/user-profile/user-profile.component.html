@@ -4,44 +4,59 @@
 
 @if (apiControllerService.loading$ | async) {
   <mat-spinner></mat-spinner>
+} @else {
+  @if (apiControllerService.error$ | async) {
+    <h5 class="profile-error">An Error Occured while updating your data.</h5>
+    <h5 class="profile-error">
+      Your data has not been updated. Please try again.
+    </h5>
+  }
+
+  @if (!(apiControllerService.error$ | async) && showSuccessMessage) {
+    <h5 class="profile-success">Your data has been updated successfully.</h5>
+  }
+
+  <form
+    [formGroup]="userProfileForm"
+    class="profile-form-wrapper"
+    (ngSubmit)="onUpdate()"
+  >
+    <app-input
+      [inputDisabled]="formDisabled"
+      [control]="userProfileForm.controls.name"
+      label="Name"
+      [errorMessages]="userProfileForm.controls.name | validationError"
+    />
+    <app-input
+      [inputDisabled]="formDisabled"
+      [control]="userProfileForm.controls.gender"
+      label="Gender"
+      [errorMessages]="userProfileForm.controls.gender | validationError"
+    />
+    <app-input
+      [inputDisabled]="formDisabled"
+      [control]="userProfileForm.controls.email"
+      label="Email"
+      [errorMessages]="userProfileForm.controls.email | validationError"
+    />
+
+    <app-cta-button
+      [buttonText]="'Save'"
+      [disabled]="formDisabled"
+      class="save-button"
+    />
+  </form>
+
+  <div class="cta-group">
+    <app-cta-button
+      [buttonText]="'Delete'"
+      [buttonClass]="'error'"
+      (onClick)="onDelete()"
+    />
+    <app-cta-button [buttonText]="'Edit'" (onClick)="onEdit()" />
+  </div>
+
+  <div class="lougout-wrapper">
+    <app-cta-button [buttonText]="'Logout'" (onClick)="onLogout()" />
+  </div>
 }
-
-<form
-  [formGroup]="userProfileForm"
-  class="profile-form-wrapper"
-  (ngSubmit)="onUpdate()"
->
-  <app-input
-    [inputDisabled]="formDisabled"
-    [control]="userProfileForm.controls.name"
-    label="Name"
-    [errorMessages]="userProfileForm.controls.name | validationError"
-  />
-  <app-input
-    [inputDisabled]="formDisabled"
-    [control]="userProfileForm.controls.gender"
-    label="Gender"
-    [errorMessages]="userProfileForm.controls.gender | validationError"
-  />
-  <app-input
-    [inputDisabled]="formDisabled"
-    [control]="userProfileForm.controls.email"
-    label="Email"
-    [errorMessages]="userProfileForm.controls.email | validationError"
-  />
-
-  <app-cta-button
-    [buttonText]="'Save'"
-    [disabled]="formDisabled"
-    class="save-button"
-  />
-</form>
-
-<div class="cta-group">
-  <app-cta-button
-    [buttonText]="'Delete'"
-    [errorButton]="true"
-    (onClick)="onDelete()"
-  />
-  <app-cta-button [buttonText]="'Edit'" (onClick)="onEdit()" />
-</div>

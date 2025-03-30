@@ -4,16 +4,26 @@
   gap: 20px;
 }
 
-.username-password-error {
+.profile-error {
   color: red;
 }
 
 .cta-group {
-  margin-top: 20px;
+  margin: 20px 0 20px 0;
   display: flex;
   gap: 10px;
 }
 
 .save-button {
   align-self: center;
+}
+
+.profile-success {
+  color: green;
+}
+
+.lougout-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }

@@ -37,14 +37,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   private fetchUserProfile(): void {
-    this.apiControllerService.loading$.next(true);
     this.apiControllerService
       .get('users/7804411')
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         exhaustMap((response: UserResponse) => {
           this.populateForm(response);
-          this.apiControllerService.loading$.next(false);
           return of(response);
         }),
       )
@@ -67,8 +65,6 @@ export class UserProfileComponent implements OnInit {
 
   // This method would/should include a tagging event in a real world app
   public onDelete(): void {
-    this.apiControllerService.loading$.next(true);
-
     // I will just simulate the delete action here
     this.handleSucceessDelete({} as UserResponse);
 
@@ -86,8 +82,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   private handleSucceessDelete(response: UserResponse) {
-    this.apiControllerService.loading$.next(false);
-    this.apiControllerService.error$.next(false);
     sessionStorage.setItem(SessionConstants.IsLoggedIn, 'false');
     this.router.navigate(['./login']);
     return of(response);
@@ -104,7 +98,6 @@ export class UserProfileComponent implements OnInit {
       return;
     }
 
-    this.apiControllerService.loading$.next(true);
     this.apiControllerService
       .put<UserPayload, UserResponse>('users/7804411', {
         email: this.userProfileForm.value.email,
@@ -121,11 +114,14 @@ export class UserProfileComponent implements OnInit {
       .subscribe();
   }
 
+  public onLogout(): void {
+    sessionStorage.setItem(SessionConstants.IsLoggedIn, 'false');
+    this.router.navigate(['./login']);
+  }
+
   private handleSuccessUpdate(
     response: UserResponse,
   ): Observable<UserResponse> {
-    this.apiControllerService.loading$.next(false);
-    this.apiControllerService.error$.next(false);
     this.formDisabled = true;
     this.showSuccessMessage = true;
     return of(response);

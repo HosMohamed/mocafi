@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, of, Observable, BehaviorSubject } from 'rxjs';
+import { catchError, of, Observable, BehaviorSubject, map } from 'rxjs';
 
 /**
  * This service is designed to be injected into child components, ensuring that
@@ -30,11 +30,13 @@ export class ApiControllerService {
   };
 
   public get<T>(endPoint: string) {
+    this.loading$.next(true);
     const url = `${this.baseUrl}/${endPoint}`;
     return this.httpClient
       .get<T>(url, { headers: new HttpHeaders(this.headers) })
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        map((response) => this.handleStatusUpdates(response)),
         catchError((error) =>
           this.handleRetry<T, null>(error, endPoint, this.get<T>),
         ),
@@ -42,11 +44,13 @@ export class ApiControllerService {
   }
 
   public post<B, T>(endPoint: string, body: B) {
+    this.loading$.next(true);
     const url = `${this.baseUrl}/${endPoint}`;
     return this.httpClient
       .post<T>(url, body, { headers: new HttpHeaders(this.headers) })
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        map((response) => this.handleStatusUpdates(response)),
         catchError((error) =>
           this.handleRetry<B, T>(error, endPoint, this.post<B, T>, body),
         ),
@@ -54,11 +58,13 @@ export class ApiControllerService {
   }
 
   public put<B, T>(endPoint: string, body: B) {
+    this.loading$.next(true);
     const url = `${this.baseUrl}/${endPoint}`;
     return this.httpClient
       .put<T>(url, body, { headers: new HttpHeaders(this.headers) })
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        map((response) => this.handleStatusUpdates(response)),
         catchError((error) =>
           this.handleRetry<B, T>(error, endPoint, this.put<B, T>, body),
         ),
@@ -66,15 +72,23 @@ export class ApiControllerService {
   }
 
   public delete<T>(endPoint: string) {
+    this.loading$.next(true);
     const url = `${this.baseUrl}/${endPoint}`;
     return this.httpClient
       .delete<T>(url, { headers: new HttpHeaders(this.headers) })
       .pipe(
         takeUntilDestroyed(this.destroyRef),
+        map((response) => this.handleStatusUpdates(response)),
         catchError((error) =>
           this.handleRetry(error, endPoint, this.delete<T>),
         ),
       );
+  }
+
+  private handleStatusUpdates<T>(response: T) {
+    this.loading$.next(false);
+    this.error$.next(false);
+    return response;
   }
 
   private handleRetry<B, T>(
