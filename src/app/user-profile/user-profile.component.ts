@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import _ from 'lodash';
-import { exhaustMap, of } from 'rxjs';
+import { exhaustMap, Observable, of } from 'rxjs';
 import { SessionConstants } from '../route-guards/can-activate.guard';
 import { UserPayload, UserResponse } from '../user-flow/user-flow.types';
 
@@ -115,13 +115,19 @@ export class UserProfileComponent implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         exhaustMap((response: UserResponse) => {
-          this.apiControllerService.loading$.next(false);
-          this.apiControllerService.error$.next(false);
-          this.formDisabled = true;
-          this.showSuccessMessage = true;
-          return of(response);
+          return this.handleSuccessUpdate(response);
         }),
       )
       .subscribe();
+  }
+
+  private handleSuccessUpdate(
+    response: UserResponse,
+  ): Observable<UserResponse> {
+    this.apiControllerService.loading$.next(false);
+    this.apiControllerService.error$.next(false);
+    this.formDisabled = true;
+    this.showSuccessMessage = true;
+    return of(response);
   }
 }

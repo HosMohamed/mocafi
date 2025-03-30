@@ -36,6 +36,10 @@ export class UserLoginComponent {
       return;
     }
 
+    this.handleValidForm();
+  }
+
+  private handleValidForm(): void {
     const credentials = {
       username: 'SamHere',
       password: 'adminadmin',

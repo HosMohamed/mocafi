@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiControllerService } from '../services/api-controller.service';
 import { UserPayload, UserResponse } from '../user-flow/user-flow.types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { exhaustMap, of } from 'rxjs';
+import { exhaustMap, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { SessionConstants } from '../route-guards/can-activate.guard';
 
@@ -51,13 +51,19 @@ export class UserRegistrationComponent {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         exhaustMap((response) => {
-          sessionStorage.setItem(SessionConstants.IsLoggedIn, 'true');
-          this.apiControllerService.loading$.next(false);
-          this.apiControllerService.error$.next(false);
-          this.router.navigate(['./profile']);
-          return of(response);
+          return this.handleSuccessRegistration(response);
         }),
       )
       .subscribe();
+  }
+
+  private handleSuccessRegistration(
+    response: UserResponse,
+  ): Observable<UserResponse> {
+    sessionStorage.setItem(SessionConstants.IsLoggedIn, 'true');
+    this.apiControllerService.loading$.next(false);
+    this.apiControllerService.error$.next(false);
+    this.router.navigate(['./profile']);
+    return of(response);
   }
 }
