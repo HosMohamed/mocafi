@@ -6,6 +6,7 @@ import { AppInputComponent } from '../shared-component/app-input/app-input.compo
 import { CTAButtonComponent } from '../shared-component/cta-button/cta-button.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ValidationErrorPipe } from '../pipes/validation-error.pipe';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,7 @@ export const routes: Routes = [
     CTAButtonComponent,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
+    ValidationErrorPipe,
     RouterModule.forChild(routes),
   ],
 })

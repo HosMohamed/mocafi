@@ -3,7 +3,7 @@ import { ApiControllerService } from '../services/api-controller.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import _, { take } from 'lodash';
+import _ from 'lodash';
 import { exhaustMap, of } from 'rxjs';
 import { SessionConstants } from '../route-guards/can-activate.guard';
 import { UserPayload, UserResponse } from '../user-flow/user-flow.types';
@@ -63,24 +63,6 @@ export class UserProfileComponent implements OnInit {
 
   public onEdit(): void {
     this.formDisabled = false;
-  }
-
-  public getErrorMessages(control: FormControl): string[] {
-    const errors = [];
-
-    if (!_.isEmpty(control.errors) && control.touched) {
-      if (control?.errors?.['email']) {
-        errors.push('Please enter a valid email');
-      }
-      if (control?.errors?.['minlength']) {
-        errors.push('A minimum length of 8 characters is required');
-      }
-      if (control?.errors?.['pattern']) {
-        errors.push('Gender should either be Male or Female');
-      }
-    }
-
-    return errors;
   }
 
   // This method would/should include a tagging event in a real world app

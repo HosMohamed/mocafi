@@ -16,12 +16,12 @@
   <app-input
     [control]="loginForm.controls.userName"
     label="Username"
-    [errorMessages]="getErrorMessages(loginForm.controls.userName)"
+    [errorMessages]="loginForm.controls.userName | validationError"
   />
   <app-input
     [control]="loginForm.controls.password"
     label="Password"
-    [errorMessages]="getErrorMessages(loginForm.controls.password)"
+    [errorMessages]="loginForm.controls.password | validationError"
     [inputType]="'password'"
   />
 

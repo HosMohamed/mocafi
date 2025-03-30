@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiControllerService } from '../services/api-controller.service';
 import { UserPayload, UserResponse } from '../user-flow/user-flow.types';
@@ -28,24 +28,6 @@ export class UserRegistrationComponent {
     ]),
     email: new FormControl('', [Validators.required, Validators.email]),
   });
-
-  public getErrorMessages(control: FormControl): string[] {
-    const errors = [];
-
-    if (!_.isEmpty(control.errors) && control.touched) {
-      if (control?.errors?.['email']) {
-        errors.push('Please enter a valid email');
-      }
-      if (control?.errors?.['minlength']) {
-        errors.push('A minimum length of 8 characters is required');
-      }
-      if (control?.errors?.['pattern']) {
-        errors.push('Gender should either be Male or Female');
-      }
-    }
-
-    return errors;
-  }
 
   // This method would/should include a tagging event in a real world app
   public onRegistration(): void {

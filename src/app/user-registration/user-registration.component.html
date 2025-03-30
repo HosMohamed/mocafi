@@ -17,17 +17,17 @@
     <app-input
       [control]="registrationForm.controls.name"
       label="Name"
-      [errorMessages]="getErrorMessages(registrationForm.controls.name)"
+      [errorMessages]="registrationForm.controls.name | validationError"
     />
     <app-input
       [control]="registrationForm.controls.gender"
       label="Gender"
-      [errorMessages]="getErrorMessages(registrationForm.controls.gender)"
+      [errorMessages]="registrationForm.controls.gender | validationError"
     />
     <app-input
       [control]="registrationForm.controls.email"
       label="Email"
-      [errorMessages]="getErrorMessages(registrationForm.controls.email)"
+      [errorMessages]="registrationForm.controls.email | validationError"
     />
 
     <a routerLink="/login">&lt; Back to login</a>

@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppInputComponent } from '../shared-component/app-input/app-input.component';
 import { CTAButtonComponent } from '../shared-component/cta-button/cta-button.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ValidationErrorPipe } from '../pipes/validation-error.pipe';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,7 @@ export const routes: Routes = [
     AppInputComponent,
     CTAButtonComponent,
     ReactiveFormsModule,
+    ValidationErrorPipe,
     RouterModule.forChild(routes),
   ],
 })

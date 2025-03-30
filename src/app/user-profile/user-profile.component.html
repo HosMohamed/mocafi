@@ -15,19 +15,19 @@
     [inputDisabled]="formDisabled"
     [control]="userProfileForm.controls.name"
     label="Name"
-    [errorMessages]="getErrorMessages(userProfileForm.controls.name)"
+    [errorMessages]="userProfileForm.controls.name | validationError"
   />
   <app-input
     [inputDisabled]="formDisabled"
     [control]="userProfileForm.controls.gender"
     label="Gender"
-    [errorMessages]="getErrorMessages(userProfileForm.controls.gender)"
+    [errorMessages]="userProfileForm.controls.gender | validationError"
   />
   <app-input
     [inputDisabled]="formDisabled"
     [control]="userProfileForm.controls.email"
     label="Email"
-    [errorMessages]="getErrorMessages(userProfileForm.controls.email)"
+    [errorMessages]="userProfileForm.controls.email | validationError"
   />
 
   <app-cta-button
