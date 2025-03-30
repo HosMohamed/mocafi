@@ -1,9 +1,11 @@
 <div class="input-wrapper">
   <label [for]="control" class="label"> {{ label }}</label>
   <input
-    type="text"
+    [type]="inputType"
+    [name]="inputType"
+    autocomplete="on"
     class="input"
-    [id]="control"
+    [id]="label"
     [formControl]="control"
     [readonly]="inputDisabled"
   />
