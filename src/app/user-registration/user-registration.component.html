@@ -1,0 +1,37 @@
+<h1>MoCaFi</h1>
+
+<h2>Registration</h2>
+
+@if (apiControllerService.loading$ | async) {
+  <mat-spinner></mat-spinner>
+} @else {
+  @if (apiControllerService.error$ | async) {
+    <h5 class="registration-error">Something went wrong. Please try again.</h5>
+  }
+
+  <form
+    [formGroup]="registrationForm"
+    class="reg-form-wrapper"
+    (ngSubmit)="onRegistration()"
+  >
+    <app-input
+      [control]="registrationForm.controls.name"
+      label="Name"
+      [errorMessages]="getErrorMessages(registrationForm.controls.name)"
+    />
+    <app-input
+      [control]="registrationForm.controls.gender"
+      label="Gender"
+      [errorMessages]="getErrorMessages(registrationForm.controls.gender)"
+    />
+    <app-input
+      [control]="registrationForm.controls.email"
+      label="Email"
+      [errorMessages]="getErrorMessages(registrationForm.controls.email)"
+    />
+
+    <a routerLink="/login">&lt; Back to login</a>
+
+    <app-cta-button [buttonText]="'Register'" />
+  </form>
+}

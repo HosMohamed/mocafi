@@ -1,0 +1,30 @@
+<h1>MoCaFi</h1>
+
+<h2>Login</h2>
+
+@if (loginErrorMessage) {
+  <h5 class="username-password-error">
+    Your Username and Password are incorrect.
+  </h5>
+}
+
+<form
+  [formGroup]="loginForm"
+  class="login-form-wrapper"
+  (ngSubmit)="onLoginSubmit()"
+>
+  <app-input
+    [control]="loginForm.controls.userName"
+    label="Username"
+    [errorMessages]="getErrorMessages(loginForm.controls.userName)"
+  />
+  <app-input
+    [control]="loginForm.controls.password"
+    label="Password"
+    [errorMessages]="getErrorMessages(loginForm.controls.password)"
+  />
+
+  <a routerLink="/registration">Not Registered?</a>
+
+  <app-cta-button [disabled]="!loginForm.valid" [buttonText]="'Login'" />
+</form>

@@ -1,0 +1,19 @@
+.profile-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.username-password-error {
+  color: red;
+}
+
+.cta-group {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.save-button {
+  align-self: center;
+}

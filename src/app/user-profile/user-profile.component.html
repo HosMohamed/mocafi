@@ -1,0 +1,47 @@
+<h1>MoCaFi</h1>
+
+<h2>User Profile</h2>
+
+@if (apiControllerService.loading$ | async) {
+  <mat-spinner></mat-spinner>
+}
+
+<form
+  [formGroup]="userProfileForm"
+  class="profile-form-wrapper"
+  (ngSubmit)="onUpdate()"
+>
+  <app-input
+    [inputDisabled]="formDisabled"
+    [control]="userProfileForm.controls.name"
+    label="Name"
+    [errorMessages]="getErrorMessages(userProfileForm.controls.name)"
+  />
+  <app-input
+    [inputDisabled]="formDisabled"
+    [control]="userProfileForm.controls.gender"
+    label="Gender"
+    [errorMessages]="getErrorMessages(userProfileForm.controls.gender)"
+  />
+  <app-input
+    [inputDisabled]="formDisabled"
+    [control]="userProfileForm.controls.email"
+    label="Email"
+    [errorMessages]="getErrorMessages(userProfileForm.controls.email)"
+  />
+
+  <app-cta-button
+    [buttonText]="'Save'"
+    [disabled]="formDisabled"
+    class="save-button"
+  />
+</form>
+
+<div class="cta-group">
+  <app-cta-button
+    [buttonText]="'Delete'"
+    [errorButton]="true"
+    (onClick)="onDelete()"
+  />
+  <app-cta-button [buttonText]="'Edit'" (onClick)="onEdit()" />
+</div>

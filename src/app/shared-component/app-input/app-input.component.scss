@@ -1,0 +1,30 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 4px;
+}
+.label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #0376a7;
+}
+.input {
+  outline: none;
+  border: 1px solid #222222;
+  border-radius: 4px;
+  background: transparent;
+  padding: 16px;
+  color: #222222;
+}
+
+.input-error {
+  color: red;
+  font-size: 13px;
+  margin: 0;
+}
+
+.input:read-only {
+  background: #bbbbbb;
+  cursor: not-allowed;
+}

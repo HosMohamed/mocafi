@@ -1,0 +1,16 @@
+<div class="input-wrapper">
+  <label [for]="control" class="label"> {{ label }}</label>
+  <input
+    type="text"
+    class="input"
+    [id]="control"
+    [formControl]="control"
+    [readonly]="inputDisabled"
+  />
+
+  @if (!!errorMessages) {
+    @for (error of errorMessages; track error) {
+      <p class="input-error">{{ error }}</p>
+    }
+  }
+</div>
