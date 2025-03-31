@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ValidationErrorPipe } from '../../pipes/validation-error.pipe';
 import { provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { ApiControllerService } from '../../services/api-controller.service';
+import { ApiControllerService } from '../../services/api-controller/api-controller.service';
 
 describe('UserLoginComponent', () => {
   let component: UserRegistrationComponent;

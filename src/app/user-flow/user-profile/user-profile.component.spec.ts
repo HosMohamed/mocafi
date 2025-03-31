@@ -83,7 +83,7 @@ describe('UserLoginComponent', () => {
   });
 
   it('should set formDisabled and showSuccessMessage to true on success update', () => {
-    component['handleSuccessUpdate']({} as any);
+    component['handleSuccessUpdate']();
     expect(component.formDisabled).toBe(true);
     expect(component.showSuccessMessage).toBe(true);
   });

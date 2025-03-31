@@ -1,24 +1,24 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import _ from 'lodash';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ApiControllerService } from '../../services/api-controller.service';
-import { UserPayload, UserResponse } from '../user-flow.types';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { exhaustMap, Observable, of } from 'rxjs';
+import { ApiControllerService } from '../../services/api-controller/api-controller.service';
+import { UserResponse } from '../user-flow.types';
+import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { SessionConstants } from '../../route-guards/can-activate.guard';
+import { UserCommunicationService } from '../../services/user-communication/user-communication.service';
 
 @Component({
   selector: 'app-user-registration',
   standalone: false,
   templateUrl: './user-registration.component.html',
   styleUrl: './user-registration.component.scss',
-  providers: [ApiControllerService],
+  providers: [ApiControllerService, UserCommunicationService],
 })
 export class UserRegistrationComponent {
-  private destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
   public readonly apiControllerService = inject(ApiControllerService);
+  public readonly userCommunicationService = inject(UserCommunicationService);
 
   public registrationForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -40,20 +40,16 @@ export class UserRegistrationComponent {
       return;
     }
 
-    this.apiControllerService
-      .post<UserPayload, UserResponse>('users', {
-        email: this.registrationForm.value.email,
-        gender: this.registrationForm.value.gender,
-        name: this.registrationForm.value.name,
-        status: 'active',
-      })
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        exhaustMap((response) => {
-          return this.handleSuccessRegistration(response);
-        }),
-      )
-      .subscribe();
+    const payload = {
+      name: this.registrationForm.value.name,
+      email: this.registrationForm.value.email,
+      gender: this.registrationForm.value.gender,
+      status: 'active',
+    };
+
+    this.userCommunicationService.createUser(payload).subscribe((response) => {
+      this.handleSuccessRegistration(response);
+    });
   }
 
   private handleSuccessRegistration(
