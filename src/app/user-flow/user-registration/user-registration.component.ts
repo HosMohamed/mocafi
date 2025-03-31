@@ -1,12 +1,12 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import _ from 'lodash';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ApiControllerService } from '../services/api-controller.service';
-import { UserPayload, UserResponse } from '../user-flow/user-flow.types';
+import { ApiControllerService } from '../../services/api-controller.service';
+import { UserPayload, UserResponse } from '../user-flow.types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { exhaustMap, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { SessionConstants } from '../route-guards/can-activate.guard';
+import { SessionConstants } from '../../route-guards/can-activate.guard';
 
 @Component({
   selector: 'app-user-registration',

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserLoginComponent } from './user-login.component';
 import { Router } from '@angular/router';
-import { ValidationErrorPipe } from '../pipes/validation-error.pipe';
+import { ValidationErrorPipe } from '../../pipes/validation-error.pipe';
 
 describe('UserLoginComponent', () => {
   let component: UserLoginComponent;

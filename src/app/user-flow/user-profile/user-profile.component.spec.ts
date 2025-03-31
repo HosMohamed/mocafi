@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserProfileComponent } from './user-profile.component';
 import { Router } from '@angular/router';
-import { ValidationErrorPipe } from '../pipes/validation-error.pipe';
+import { ValidationErrorPipe } from '../../pipes/validation-error.pipe';
 import { provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 

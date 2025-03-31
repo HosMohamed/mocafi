@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import _ from 'lodash';
-import { SessionConstants } from '../route-guards/can-activate.guard';
+import { SessionConstants } from '../../route-guards/can-activate.guard';
 import { Router } from '@angular/router';
 
 @Component({

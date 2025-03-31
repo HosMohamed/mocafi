@@ -5,22 +5,22 @@ export const routes: Routes = [
   {
     path: 'login',
     loadChildren: () =>
-      import('./user-login/user-login.module').then(
-        (res) => res.UserLoginModule
+      import('./user-flow/user-login/user-login.module').then(
+        (res) => res.UserLoginModule,
       ),
   },
   {
     path: 'registration',
     loadChildren: () =>
-      import('./user-registration/user-registration.module').then(
-        (res) => res.UserRegistrationModule
+      import('./user-flow/user-registration/user-registration.module').then(
+        (res) => res.UserRegistrationModule,
       ),
   },
   {
     path: 'profile',
     loadChildren: () =>
-      import('./user-profile/user-profile.module').then(
-        (res) => res.UserProfileModule
+      import('./user-flow/user-profile/user-profile.module').then(
+        (res) => res.UserProfileModule,
       ),
     canActivate: [CanActivateGuard],
   },
