@@ -1,6 +1,5 @@
 # [Deployed Application Link](https://mocafi-lac.vercel.app/)
 
-
 ## Project Introduction
 
 This project is a standalone application for handling user-related UI and CRUD operations.
@@ -74,7 +73,6 @@ Auth guards protect sensitive pages from unauthorized access.
 Given that this is a demo project, the following considerations weren't implemented, but should be in a production-ready environment:
 
 - NgRx should be used for state management.
-- Should store user-related API operations in a `UserStoreModule` to keep components clean.
 - Specific error code handling such as 400, 404, 500, etc., should be implemented.
 - Enforce strict password rules, requiring special characters and capital letters.
 - Handling errors based on whether they are blocking/non-blocking.
@@ -86,8 +84,6 @@ Given that this is a demo project, the following considerations weren't implemen
 - Store error messages in a constants module.
 - Replace the validation pipe with a service for better performance.
 - Utilize global SCSS variables for styling consistency.
-
-
 
 ## Notes
 
