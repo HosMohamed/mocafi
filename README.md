@@ -48,7 +48,8 @@ The following development patterns are used to maintain code quality and streaml
 
 - The access token is a non-expiring token for development purposes, stored in an environment variable on the host server and automatically attached to every request.
 - CRUD methods are generic to support custom types. However, they have limitations, discussed in the **"Real-World Application Considerations"** section.
-- `exhaustMap` is used to process only the first submitted request, preventing unnecessary duplicate API calls since it grabs the first valid source observable and ignores the rest, unlike `switchMap` which would keep cancelling previous source observables that can be costly in a large scale application since it has specific uses.
+- A `UserCommunication` service is created to handle user specific operations.
+- `exhaustMap` is favored to process only the first submitted request, preventing unnecessary duplicate API calls since it grabs the first valid source observable and ignores the rest, unlike `switchMap` which would keep cancelling previous source observables that can be costly in a large scale application since it has specific uses.
 
 ### **Shared Components**
 
