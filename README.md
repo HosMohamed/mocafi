@@ -49,7 +49,7 @@ The following development patterns are used to maintain code quality and streaml
 
 - The access token is a non-expiring token for development purposes, stored in an environment variable on the host server and automatically attached to every request.
 - CRUD methods are generic to support custom types. However, they have limitations, discussed in the **"Real-World Application Considerations"** section.
-- `exhaustMap` is used to process only the first submitted request, preventing unnecessary duplicate API calls.
+- `exhaustMap` is used to process only the first submitted request, preventing unnecessary duplicate API calls since it grabs the first valid source observable and ignores the rest, unlike `switchMap` which would keep cancelling previous source observables that can be costly in a large scale application since it has specific uses.
 
 ### **Shared Components**
 
@@ -69,20 +69,25 @@ Form validation is centralized in a single pipe, ensuring consistency across mul
 
 Auth guards protect sensitive pages from unauthorized access.
 
-## Real-World Application Considerations
+## Real-World Application Production Level Considerations
 
-The following improvements should be made for production readiness:
+Given that this is a demo project, the following considerations weren't implemented, but should be in a production-ready environment:
 
+- NgRx should be used for state management.
+- Should store user-related API operations in a `UserStoreModule` to keep components clean.
+- Specific error code handling such as 400, 404, 500, etc., should be implemented.
+- Enforce strict password rules, requiring special characters and capital letters.
+- Handling errors based on whether they are blocking/non-blocking.
+- Use `shareReplay` to memoize requests when persisting data.
+- Develop shared components as a separate library to improve modularity.
 - Display a retry modal if an API request fails more than three times.
 - Override HTTP methods to use generic types instead of returning `Observable<any>`.
 - Move authentication headers to an HTTP interceptor instead of the API controller.
 - Store error messages in a constants module.
-- Develop shared components as a separate library to improve modularity.
 - Replace the validation pipe with a service for better performance.
 - Utilize global SCSS variables for styling consistency.
-- Use `shareReplay` to memoize requests when persisting data.
-- Store user-related API operations in a `UserStoreModule` to keep components clean.
-- Enforce strict password rules, requiring special characters and capital letters.
+
+
 
 ## Notes
 
