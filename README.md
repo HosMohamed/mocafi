@@ -19,6 +19,7 @@ The application consumes [GoRest](https://gorest.co.in) APIs.
 
 - **Angular v19**
 - **RxJS v7**
+- **Jest**
 - **SCSS**
 
 ## Local Development
